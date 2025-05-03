@@ -43,3 +43,9 @@ export type LanguageCode =
   | 'nl'
   | 'yo'
   | 'uk'
+
+/**
+ * @type {MessageKey}
+ * @description Type for the message keys.
+ */
+export type MessageKey = Extract<keyof Messages, string>
