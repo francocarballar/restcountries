@@ -8,7 +8,7 @@ import { filterFields } from '@/utils/filterData'
 import { sortData } from '@/utils/sortData'
 
 // Data
-import countriesDataJson from '../data/countriesV3.1.json'
+import countriesDataJson from '../data/countriesV3.1.json' with { type: 'json' }
 
 const countriesData: Countries[] = countriesDataJson as unknown as Countries[]
 
