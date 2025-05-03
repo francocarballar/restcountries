@@ -4,6 +4,7 @@ import type { MessageKey } from '@/types/message'
 // Modules and main functions
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
+import { cache } from 'hono/cache'
 
 // Utils
 import { getTranslatedMessage } from '@/i18n/getTranslatedMessage'
@@ -13,6 +14,15 @@ import { countries } from '@/countries/routes'
 import { region } from '@/region/routes'
 
 const app = new Hono()
+
+app.use(
+  '*',
+  cache({
+    cacheName: 'restcountries-api-cache',
+    cacheControl: 'public, max-age=604800, s-maxage=604800',
+    vary: ['Accept-Language']
+  })
+)
 
 /**
  * @function onError
