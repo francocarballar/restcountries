@@ -61,7 +61,7 @@ const handleGetCountryByName = (c: Context) => {
 
   const sortCriteria = parseSortParameter(sort)
 
-  const flatten = flattenQuery === 'true'
+  const flatten = flattenQuery ? flattenQuery === 'true' : undefined
 
   const countriesFound = findCountryByName(
     normalizedName,
