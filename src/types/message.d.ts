@@ -3,6 +3,7 @@
  * @description Interface for the messages.
  */
 export interface Messages {
+  welcome: string
   countryNotFound: string
   regionNotFound: string
   internalServerError: string
