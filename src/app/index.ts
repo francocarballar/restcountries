@@ -5,6 +5,8 @@ import type { MessageKey } from '@/shared/types/message'
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { cache } from 'hono/cache'
+import { cors } from 'hono/cors'
+import { prettyJSON } from 'hono/pretty-json'
 
 // Utils
 import { getTranslatedMessage } from '@/shared/lib/i18n/getTranslatedMessage'
@@ -15,6 +17,14 @@ import { region } from '@/features/region/routes'
 
 const app = new Hono()
 
+// Middlewares
+app.use('*', prettyJSON())
+app.use(
+  '*',
+  cors({
+    origin: '*'
+  })
+)
 app.use(
   '*',
   cache({
