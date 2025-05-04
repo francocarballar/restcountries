@@ -23,9 +23,20 @@ A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, pr
 2. **Install dependencies:**
    _(Assuming Bun is used, based on `bun.lock`; adjust if using npm or yarn)_
 
-   ```bash
+   <CodeGroup>
+   ```bash bun
    bun install
    ```
+   ```bash pnpm
+   pnpm install
+   ```
+   ```bash npm
+   npm install
+   ```
+   ```bash yarn
+   yarn install
+   ```
+   </CodeGroup>
 
 3. **Configuration:**
    - This project relies on configuration defined in `wrangler.jsonc` (or `wrangler.toml`).
