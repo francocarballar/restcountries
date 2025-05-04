@@ -4,14 +4,17 @@ import { HTTPException } from 'hono/http-exception'
 import { zValidator } from '@hono/zod-validator'
 
 // Utils
-import { normalizeParam } from '@/utils/normalizeParam'
-import { parseSortParameter } from '@/utils/sortData'
+import { normalizeParam } from '@/shared/utils/normalizeParam'
+import { parseSortParameter } from '@/shared/utils/sortData'
 
 // Services
-import { findCountryByName, getAllCountries } from '@/countries/service'
+import {
+  findCountryByName,
+  getAllCountries
+} from '@/features/countries/service'
 
 // Validators
-import { querySchema, paramSchema } from '@/countries/validators'
+import { querySchema, paramSchema } from '@/features/countries/validators'
 
 /**
  * @function handleGetAllCountries

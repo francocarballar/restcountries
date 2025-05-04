@@ -1,15 +1,15 @@
 // Types and interfaces
-import type { SortCriterion } from '@/types/sort'
-import type { RegionSummary } from '@/types/region'
-import type { Countries } from '@/types/countries'
+import type { SortCriterion } from '@/shared/types/sort'
+import type { RegionSummary } from '@/shared/types/region'
+import type { Countries } from '@/shared/types/countries'
 
 // Utils
-import { normalizeParam } from '@/utils/normalizeParam'
-import { filterFields } from '@/utils/filterData'
-import { sortData } from '@/utils/sortData'
+import { normalizeParam } from '@/shared/utils/normalizeParam'
+import { filterFields } from '@/shared/utils/filterData'
+import { sortData } from '@/shared/utils/sortData'
 
 // Data
-import countriesDataJson from '@/data/countriesV3.1.json' with { type: 'json' }
+import countriesDataJson from '@/shared/data/countriesV3.1.json' with { type: 'json' }
 
 const countriesData: Countries[] = countriesDataJson as unknown as Countries[]
 
