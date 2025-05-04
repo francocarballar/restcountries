@@ -16,8 +16,8 @@ Una API RESTful construida con Hono y TypeScript, desplegada en Cloudflare Worke
 1. **Clonar el repositorio:**
 
    ```bash
-   git clone <url-repositorio>
-   cd <directorio-repositorio>
+   git clone https://github.com/francocarballar/restcountries
+   cd restcountries
    ```
 
 2. **Instalar dependencias:**
