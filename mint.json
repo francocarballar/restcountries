@@ -28,7 +28,26 @@
     {
       "group": "API Reference",
       "pages": [
-        "api-reference/overview"
+        {
+          "group": "General",
+          "pages": [
+            "docs/api-reference/general/get-api-welcome-message"
+          ]
+        },
+        {
+          "group": "Countries",
+          "pages": [
+            "docs/api-reference/countries/get-all-countries",
+            "docs/api-reference/countries/get-countries-by-name"
+          ]
+        },
+        {
+          "group": "Regions",
+          "pages": [
+            "docs/api-reference/regions/get-available-regions",
+            "docs/api-reference/regions/get-countries-by-region"
+          ]
+        }
       ]
     },
     {
