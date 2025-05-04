@@ -1,0 +1,49 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "REST Countries API",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#4D9CFF",
+    "light": "#6BBDFF",
+    "dark": "#3A8EFF",
+    "background": {
+      "dark": "#0F172A"
+    },
+    "anchors": {
+      "from": "#FF7A00",
+      "to": "#FFB800"
+    }
+  },
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview"
+      ]
+    },
+    {
+      "group": "Endpoints Guide",
+      "pages": [
+        "docs/endpoints"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "docs/architecture",
+        "docs/deploy"
+      ]
+    }
+  ],
+  "openapi": "openapi.yaml"
+}
