@@ -46,10 +46,25 @@ A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, pr
 
 To run the development server locally:
 
-```bash
+<CodeGroup>
+
+```bash bun
 bun run dev
-# Or: npm run dev / yarn dev (depending on package.json scripts)
 ```
+
+```bash pnpm
+pnpm run dev
+```
+
+```bash npm
+npm run dev
+```
+
+```bash yarn
+yarn run dev
+```
+
+</CodeGroup>
 
 The API will typically be available at `http://localhost:8787` (or the port configured in `wrangler.jsonc`/`package.json`).
 
