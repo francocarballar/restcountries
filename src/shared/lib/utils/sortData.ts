@@ -1,5 +1,5 @@
 import type { SortCriterion, SortDirection } from '@/shared/types/sort'
-import { getNestedValue } from '@/shared/utils/filterData'
+import { getNestedValue } from '@/shared/lib/utils/filterData'
 
 /**
  * @function parseSortParameter
