@@ -12,6 +12,12 @@
     "light": "#6BBDFF",
     "dark": "#3A8EFF"
   },
+  "background": {
+    "color": {
+      "dark": "#0F172A",
+      "light": "#F1F5F9"
+    }
+  },
   "navigation": {
     "languages": [
       {
