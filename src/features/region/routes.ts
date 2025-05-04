@@ -10,8 +10,8 @@ import {
 } from '@/features/region/service'
 
 // Utils
-import { normalizeParam } from '@/shared/utils/normalizeParam'
-import { parseSortParameter } from '@/shared/utils/sortData'
+import { normalizeParam } from '@/shared/lib/utils/normalizeParam'
+import { parseSortParameter } from '@/shared/lib/utils/sortData'
 
 // Validators
 import { paramSchema, querySchema } from '@/features/region/validators'

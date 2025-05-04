@@ -4,9 +4,9 @@ import type { RegionSummary } from '@/shared/types/region'
 import type { Countries } from '@/shared/types/countries'
 
 // Utils
-import { normalizeParam } from '@/shared/utils/normalizeParam'
-import { filterFields } from '@/shared/utils/filterData'
-import { sortData } from '@/shared/utils/sortData'
+import { normalizeParam } from '@/shared/lib/utils/normalizeParam'
+import { filterFields } from '@/shared/lib/utils/filterData'
+import { sortData } from '@/shared/lib/utils/sortData'
 
 // Data
 import countriesDataJson from '@/shared/data/countriesV3.1.json' with { type: 'json' }

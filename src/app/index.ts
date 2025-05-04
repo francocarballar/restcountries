@@ -7,7 +7,7 @@ import { HTTPException } from 'hono/http-exception'
 import { cache } from 'hono/cache'
 
 // Utils
-import { getTranslatedMessage } from '@/shared/i18n/getTranslatedMessage'
+import { getTranslatedMessage } from '@/shared/lib/i18n/getTranslatedMessage'
 
 // Routes
 import { countries } from '@/features/countries/routes'

@@ -4,8 +4,8 @@ import { HTTPException } from 'hono/http-exception'
 import { zValidator } from '@hono/zod-validator'
 
 // Utils
-import { normalizeParam } from '@/shared/utils/normalizeParam'
-import { parseSortParameter } from '@/shared/utils/sortData'
+import { normalizeParam } from '@/shared/lib/utils/normalizeParam'
+import { parseSortParameter } from '@/shared/lib/utils/sortData'
 
 // Services
 import {
