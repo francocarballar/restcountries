@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8787 # Adjust port if needed for local dev
     description: Local development server
-  - url: https://<your-worker-url> # Replace with actual deployment URL
+  - url: https://restcountries.mcp-blockchain-metadata.workers.dev # Using a valid placeholder URL
     description: Production server (Cloudflare Workers)
 paths:
   /:
