@@ -1,0 +1,270 @@
+openapi: 3.0.3
+info:
+  title: REST Countries API (Hono)
+  description: API para obtener información sobre países del mundo, construida con Hono y desplegada en Cloudflare Workers.
+  version: 1.0.0 # Ajustar versión según sea necesario
+servers:
+  - url: http://localhost:8787 # Ajustar puerto si es necesario para desarrollo local
+    description: Servidor de desarrollo local
+  - url: https://restcountries.mcp-blockchain-metadata.workers.dev # Usando una URL válida de marcador de posición
+    description: Servidor de producción (Cloudflare Workers)
+paths:
+  /:
+    get:
+      summary: Obtener Mensaje de Bienvenida de la API
+      description: Devuelve un mensaje de bienvenida simple, traducido según la cabecera Accept-Language.
+      tags:
+        - General
+      parameters:
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Idiomas preferidos para el mensaje de respuesta (p. ej., es, fr).
+          schema:
+            type: string
+            default: en
+      responses:
+        '200':
+          description: Mensaje de bienvenida exitoso.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Bienvenido a la API
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/all:
+    get:
+      summary: Obtener Todos los Países
+      description: Recupera una lista de todos los países, con opciones para filtrar, ordenar y aplanar (flatten).
+      tags:
+        - Countries (Países)
+      parameters:
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: Un array de países. La estructura depende de los parámetros de consulta.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indica que la respuesta puede ser objetos o primitivos (si se aplana)
+                    - type: object # Estructura de objeto básica
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Ejemplo no aplanado, campos parciales
+                - name: { common: 'Spain' }
+                  population: 47351567
+                - name: { common: 'France' }
+                  population: 65273511
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/name/{name}:
+    get:
+      summary: Obtener Países por Nombre
+      description: Recupera países que coinciden con el nombre proporcionado (común, oficial, nativo, traducción). No distingue mayúsculas/minúsculas ni acentos. Puede devolver múltiples coincidencias.
+      tags:
+        - Countries (Países)
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: El nombre del país a buscar.
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Idioma preferido para el mensaje de error 'No Encontrado'.
+          schema:
+            type: string
+            default: en
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: Un array de países coincidentes. La estructura depende de los parámetros de consulta.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indica que la respuesta puede ser objetos o primitivos (si se aplana)
+                    - type: object
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Ejemplo para /name/spain?fields=name.common,capital
+                - name: { common: 'Spain' }
+                  capital: ['Madrid']
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/regions:
+    get:
+      summary: Obtener Regiones Disponibles
+      description: Recupera una lista de todas las regiones disponibles con recuento de países y subregiones.
+      tags:
+        - Regions (Regiones)
+      responses:
+        '200':
+          description: Una lista de resúmenes de regiones.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegionSummary'
+              example:
+                - name: 'africa'
+                  countryCount: 59
+                  subregions: ['Eastern Africa', 'Middle Africa', ...]
+                - name: 'americas'
+                  countryCount: 57
+                  subregions: ['Caribbean', 'Central America', ...]
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/region/{name}:
+    get:
+      summary: Obtener Países por Región
+      description: Recupera todos los países pertenecientes a la región especificada. No distingue mayúsculas/minúsculas ni acentos.
+      tags:
+        - Regions (Regiones)
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: El nombre de la región a buscar.
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Idioma preferido para el mensaje de error 'No Encontrado'.
+          schema:
+            type: string
+            default: en
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: Un array de países en la región. La estructura depende de los parámetros de consulta.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indica que la respuesta puede ser objetos o primitivos (si se aplana)
+                    - type: object
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Ejemplo para /region/europe?fields=name.common
+                - name: { common: 'Albania' }
+                - name: { common: 'Andorra' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            status:
+              type: integer
+              format: int32
+              description: El código de estado HTTP.
+            message:
+              type: string
+              description: Un mensaje de error legible por humanos.
+    RegionSummary:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre normalizado de la región.
+        countryCount:
+          type: integer
+          description: Número de países en la región.
+        subregions:
+          type: array
+          items:
+            type: string
+          description: Lista ordenada de subregiones dentro de la región.
+
+  parameters:
+    FieldsQueryParam:
+      name: fields
+      in: query
+      required: false
+      description: Lista separada por comas de campos a incluir (p. ej., `name.common,capital`).
+      schema:
+        type: string
+    SortQueryParam:
+      name: sort
+      in: query
+      required: false
+      description: Lista separada por comas de campos por los cuales ordenar (prefijo con `-` para descendente, p. ej., `-population`).
+      schema:
+        type: string
+    FlattenQueryParam:
+      name: flatten
+      in: query
+      required: false
+      description: Si es true y solo se solicita un campo, devuelve un array plano de valores.
+      schema:
+        type: boolean
+
+  responses:
+    BadRequest:
+      description: Bad Request - Parámetros de entrada inválidos.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 400
+              message: 'Parámetro de consulta inválido: ...' # Mensaje de ejemplo
+    NotFound:
+      description: Not Found - No se encontró el recurso solicitado (país o región).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 404
+              message: "País con nombre '...' no encontrado" # Mensaje localizado
+    InternalServerError:
+      description: Internal Server Error - Ocurrió un error inesperado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 500
+              message: 'Ocurrió un error interno del servidor.' # Mensaje localizado
