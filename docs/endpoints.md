@@ -1,5 +1,3 @@
-# API Endpoints
-
 This document details the available API endpoints. All endpoints are prefixed with `/api/v1`.
 
 ## Endpoints Overview

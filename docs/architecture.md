@@ -1,5 +1,3 @@
-# API Architecture
-
 This API utilizes a modular architecture built with Hono, TypeScript, and deployed on Cloudflare Workers. The structure is inspired by Feature-Sliced Design principles to promote scalability and maintainability.
 
 ## Directory Structure Overview

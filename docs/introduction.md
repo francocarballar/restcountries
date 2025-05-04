@@ -1,5 +1,3 @@
-# Introduction
-
 A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, providing information about world countries based on the REST Countries project data (v3.1).
 
 ## Features

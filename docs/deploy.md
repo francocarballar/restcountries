@@ -1,5 +1,3 @@
-# Deployment Guide
-
 This API is designed to be deployed to Cloudflare Workers using the Wrangler CLI.
 
 ## Prerequisites
