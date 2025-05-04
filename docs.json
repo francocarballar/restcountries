@@ -114,5 +114,7 @@
       }
     ]
   },
-  "openapi": "openapi.yaml"
+  "api": {
+    "openapi": "openapi.yaml"
+  }
 }
