@@ -1,18 +1,6 @@
-# REST Countries API (Hono + Cloudflare Workers)
+# Introduction
 
 A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, providing information about world countries based on the REST Countries project data (v3.1).
-
-## Table of Contents
-
-- [Features](#features)
-- [Architecture](#architecture)
-- [Installation & Configuration](#installation--configuration)
-- [Local Development](#local-development)
-- [Deployment](#deployment)
-- [API Endpoints](#api-endpoints)
-- [OpenAPI Specification](#openapi-specification)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -24,10 +12,6 @@ A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, pr
 - Input validation using Zod.
 - Efficient data retrieval using preprocessed maps.
 - Edge caching via Cloudflare Workers Cache API for improved performance.
-
-## Architecture
-
-See [docs/architecture.md](docs/architecture.md) for a detailed explanation of the project structure and request flow.
 
 ## Installation & Configuration
 
@@ -60,56 +44,9 @@ bun run dev
 
 The API will typically be available at `http://localhost:8787` (or the port configured in `wrangler.jsonc`/`package.json`).
 
-## Deployment
+## Quick Links
 
-Deployment to Cloudflare Workers is managed by Wrangler CLI.
-
-1. **Configure Wrangler:** Ensure you have Wrangler installed and configured with your Cloudflare account credentials.
-2. **Deploy:**
-
-   ```bash
-   # Check package.json for the exact deploy script
-   bun run deploy
-   # Or directly using wrangler:
-   # wrangler deploy
-   ```
-
-See [docs/deploy.md](docs/deploy.md) for more details.
-
-## API Endpoints
-
-See [docs/endpoints.md](docs/endpoints.md) for a detailed list and usage examples of all available API endpoints.
-
-## OpenAPI Specification
-
-An OpenAPI 3.0 specification is available: [openapi.yaml](openapi.yaml).
-
-## Contributing
-
-_(Placeholder: Add contribution guidelines if applicable)_
-
-## License
-
-_(Placeholder: Add license information, e.g., MIT)_
-
-```txt
-npm install
-npm run dev
-```
-
-```txt
-npm run deploy
-```
-
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
-
-```txt
-npm run cf-typegen
-```
-
-Pass the `CloudflareBindings` as generics when instantiation `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
-```
+- [API Endpoints Guide](docs/endpoints)
+- [API Reference](api-reference/overview)
+- [Architecture Overview](docs/architecture)
+- [Deployment Guide](docs/deploy)
