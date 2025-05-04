@@ -39,12 +39,25 @@ Este comando típicamente usa `tsc` u otro empaquetador (como esbuild a través 
 
 Una vez compilado, despliega el worker usando Wrangler:
 
-```bash
-# Revisa package.json para el script de despliegue exacto
+   <CodeGroup>
+
+```bash bun
 bun run deploy
-# O directamente usando wrangler:
-# wrangler deploy
 ```
+
+```bash pnpm
+pnpm run deploy
+```
+
+```bash npm
+npm run deploy
+```
+
+```bash yarn
+yarn run deploy
+```
+
+   </CodeGroup>
 
 Wrangler subirá el código compilado y configurará el Worker de acuerdo a `wrangler.jsonc`. Después del despliegue, usualmente mostrará la URL donde el Worker es accesible.
 

@@ -67,12 +67,25 @@ Deployment to Cloudflare Workers is managed by Wrangler CLI.
 1. **Configure Wrangler:** Ensure you have Wrangler installed and configured with your Cloudflare account credentials.
 2. **Deploy:**
 
-   ```bash
-   # Check package.json for the exact deploy script
+   <CodeGroup>
+
+   ```bash bun
    bun run deploy
-   # Or directly using wrangler:
-   # wrangler deploy
    ```
+
+   ```bash pnpm
+   pnpm run deploy
+   ```
+
+   ```bash npm
+   npm run deploy
+   ```
+
+   ```bash yarn
+   yarn run deploy
+   ```
+
+   </CodeGroup>
 
 See [docs/deploy.md](docs/deploy.md) for more details.
 
