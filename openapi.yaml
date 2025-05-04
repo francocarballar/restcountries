@@ -1,0 +1,270 @@
+openapi: 3.0.3
+info:
+  title: REST Countries API (Hono)
+  description: API for fetching information about world countries, built with Hono and deployed on Cloudflare Workers.
+  version: 1.0.0 # Adjust version as needed
+servers:
+  - url: http://localhost:8787 # Adjust port if needed for local dev
+    description: Local development server
+  - url: https://<your-worker-url> # Replace with actual deployment URL
+    description: Production server (Cloudflare Workers)
+paths:
+  /:
+    get:
+      summary: Get API Welcome Message
+      description: Returns a simple welcome message, translated based on the Accept-Language header.
+      tags:
+        - General
+      parameters:
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Preferred languages for the response message (e.g., es, fr).
+          schema:
+            type: string
+            default: en
+      responses:
+        '200':
+          description: Successful welcome message.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Welcome to the API
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/all:
+    get:
+      summary: Get All Countries
+      description: Retrieves a list of all countries, with options for filtering, sorting, and flattening.
+      tags:
+        - Countries
+      parameters:
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: An array of countries. Structure depends on query parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indicates response can be objects or primitives (if flattened)
+                    - type: object # Basic object structure
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Example of non-flattened, partial fields
+                - name: { common: 'Spain' }
+                  population: 47351567
+                - name: { common: 'France' }
+                  population: 65273511
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/name/{name}:
+    get:
+      summary: Get Countries by Name
+      description: Retrieves countries matching the provided name (common, official, native, translation). Case-insensitive and accent-insensitive. Can return multiple matches.
+      tags:
+        - Countries
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: The country name to search for.
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Preferred language for the 'Not Found' error message.
+          schema:
+            type: string
+            default: en
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: An array of matching countries. Structure depends on query parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indicates response can be objects or primitives (if flattened)
+                    - type: object
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Example for /name/spain?fields=name.common,capital
+                - name: { common: 'Spain' }
+                  capital: ['Madrid']
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/regions:
+    get:
+      summary: Get Available Regions
+      description: Retrieves a list of all available regions with country counts and subregions.
+      tags:
+        - Regions
+      responses:
+        '200':
+          description: A list of region summaries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegionSummary'
+              example:
+                - name: 'africa'
+                  countryCount: 59
+                  subregions: ['Eastern Africa', 'Middle Africa', ...]
+                - name: 'americas'
+                  countryCount: 57
+                  subregions: ['Caribbean', 'Central America', ...]
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/v1/region/{name}:
+    get:
+      summary: Get Countries by Region
+      description: Retrieves all countries belonging to the specified region. Case-insensitive and accent-insensitive.
+      tags:
+        - Regions
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: The region name to search for.
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Preferred language for the 'Not Found' error message.
+          schema:
+            type: string
+            default: en
+        - $ref: '#/components/parameters/FieldsQueryParam'
+        - $ref: '#/components/parameters/SortQueryParam'
+        - $ref: '#/components/parameters/FlattenQueryParam'
+      responses:
+        '200':
+          description: An array of countries in the region. Structure depends on query parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf: # Indicates response can be objects or primitives (if flattened)
+                    - type: object
+                    - type: string
+                    - type: number
+                    - type: boolean
+              example: # Example for /region/europe?fields=name.common
+                - name: { common: 'Albania' }
+                - name: { common: 'Andorra' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            status:
+              type: integer
+              format: int32
+              description: The HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+    RegionSummary:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Normalized name of the region.
+        countryCount:
+          type: integer
+          description: Number of countries in the region.
+        subregions:
+          type: array
+          items:
+            type: string
+          description: Sorted list of subregions within the region.
+
+  parameters:
+    FieldsQueryParam:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of fields to include (e.g., `name.common,capital`).
+      schema:
+        type: string
+    SortQueryParam:
+      name: sort
+      in: query
+      required: false
+      description: Comma-separated list of fields to sort by (prefix with `-` for descending, e.g., `-population`).
+      schema:
+        type: string
+    FlattenQueryParam:
+      name: flatten
+      in: query
+      required: false
+      description: If true and only one field is requested, returns a flat array of values.
+      schema:
+        type: boolean
+
+  responses:
+    BadRequest:
+      description: Bad Request - Invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 400
+              message: 'Invalid query parameter: ...' # Example message
+    NotFound:
+      description: Not Found - The requested resource (country or region) was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 404
+              message: "Country with name '...' not found" # Message is localized
+    InternalServerError:
+      description: Internal Server Error - An unexpected error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              status: 500
+              message: 'An internal server error occurred.' # Message is localized
