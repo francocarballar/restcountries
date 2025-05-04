@@ -29,21 +29,21 @@
               {
                 "group": "General",
                 "pages": [
-                  "api-reference/en/general/get-api-welcome-message"
+                  "docs/api-reference/en/general/get-api-welcome-message"
                 ]
               },
               {
                 "group": "Countries",
                 "pages": [
-                  "api-reference/en/countries/get-all-countries",
-                  "api-reference/en/countries/get-countries-by-name"
+                  "docs/api-reference/en/countries/get-all-countries",
+                  "docs/api-reference/en/countries/get-countries-by-name"
                 ]
               },
               {
                 "group": "Regions",
                 "pages": [
-                  "api-reference/en/regions/get-available-regions",
-                  "api-reference/en/regions/get-countries-by-region"
+                  "docs/api-reference/en/regions/get-available-regions",
+                  "docs/api-reference/en/regions/get-countries-by-region"
                 ]
               }
             ]
@@ -78,21 +78,21 @@
               {
                 "group": "General",
                 "pages": [
-                  "api-reference/es/general/get-api-welcome-message"
+                  "docs/api-reference/es/general/get-api-welcome-message"
                 ]
               },
               {
                 "group": "Países",
                 "pages": [
-                  "api-reference/es/countries/get-all-countries",
-                  "api-reference/es/countries/get-countries-by-name"
+                  "docs/api-reference/es/countries/get-all-countries",
+                  "docs/api-reference/es/countries/get-countries-by-name"
                 ]
               },
               {
                 "group": "Regiones",
                 "pages": [
-                  "api-reference/es/regions/get-available-regions",
-                  "api-reference/es/regions/get-countries-by-region"
+                  "docs/api-reference/es/regions/get-available-regions",
+                  "docs/api-reference/es/regions/get-countries-by-region"
                 ]
               }
             ]
