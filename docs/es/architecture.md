@@ -52,6 +52,37 @@ Una petición típica fluye a través de las siguientes capas:
 9. **Almacenamiento en Caché (Cache Miss):** Si la petición no se sirvió desde la caché inicialmente, la respuesta generada (si es cacheable) se almacena en la caché a través de la API de Caché antes de enviarla al cliente.
 10. **Manejo de Errores (`src/app/index.ts`):** Si ocurre algún error durante el proceso (p. ej., datos no encontrados que lanzan una `HTTPException`, error de validación o error inesperado del servidor), el manejador global `app.onError` lo captura. Registra el error (si es apropiado), determina el código de estado correcto, recupera un mensaje de error traducido usando `getTranslatedMessage.ts`, y devuelve una respuesta de error JSON consistente (`{ error: { status, message } }`).
 
+```mermaid
+flowchart TD
+    A[Request / Petición] --> B{Hono Entry Point};
+    B --> C{Cache Middleware};
+    C -- Cache Miss --> D{Routing / Enrutamiento};
+    C -- Cache Hit --> Z[Cached Response / Respuesta Caché];
+    D --> E{Validation Middleware (Zod)};
+    E -- Invalid --> Y{400 Bad Request};
+    E -- Valid --> F[Route Handler / Manejador Ruta];
+    F --> G[Service Logic / Lógica Servicio];
+    G --> H(Data Preprocessing / Maps);
+    G --> I(Shared Utils: Sort, Filter, Normalize);
+    G --> J(Shared Utils: i18n);
+    H --> K{Processed Data / Datos Procesados};
+    I --> K;
+    J --> K;
+    K --> L[Response Generation / Generación Respuesta];
+    L --> C; # La respuesta vuelve al middleware de caché para almacenarse
+    L --> M[JSON Response / Respuesta JSON];
+
+    subgraph Error Handling / Manejo Errores
+      Y --> X{Global onError Handler};
+      T[Any Step Error / Error en Paso] --> X;
+      X --> W[Translated Error Response / Respuesta Error Traducida];
+    end
+
+    M --> Client / Cliente;
+    Z --> Client / Cliente;
+    W --> Client / Cliente;
+```
+
 ## Componentes Clave
 
 - **Hono:** Framework web ligero que proporciona enrutamiento, middleware y manejo de contexto.

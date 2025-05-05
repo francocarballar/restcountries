@@ -52,6 +52,37 @@ A typical request flows through the following layers:
 9.  **Caching (Cache Miss):** If the request was not served from cache initially, the generated response (if cacheable) is stored in the cache via the Cache API before being sent to the client.
 10. **Error Handling (`src/app/index.ts`):** If any error occurs during the process (e.g., data not found leading to a thrown `HTTPException`, validation error, or unexpected server error), the global `app.onError` handler catches it. It logs the error (if appropriate), determines the correct status code, retrieves a translated error message using `getTranslatedMessage.ts`, and returns a consistent JSON error response (`{ error: { status, message } }`).
 
+```mermaid
+flowchart TD
+    A[Request] --> B{Hono Entry Point};
+    B --> C{Cache Middleware};
+    C -- Cache Miss --> D{Routing};
+    C -- Cache Hit --> Z[Cached Response];
+    D --> E{Validation Middleware (Zod)};
+    E -- Invalid --> Y{400 Bad Request};
+    E -- Valid --> F[Route Handler];
+    F --> G[Service Logic];
+    G --> H(Data Preprocessing / Maps);
+    G --> I(Shared Utils: Sort, Filter, Normalize);
+    G --> J(Shared Utils: i18n);
+    H --> K{Processed Data};
+    I --> K;
+    J --> K;
+    K --> L[Response Generation];
+    L --> C; # Response goes back towards cache middleware to be stored
+    L --> M[JSON Response];
+
+    subgraph Error Handling
+      Y --> X{Global onError Handler};
+      T[Any Step Error] --> X;
+      X --> W[Translated Error Response];
+    end
+
+    M --> Client;
+    Z --> Client;
+    W --> Client;
+```
+
 ## Key Components
 
 - **Hono:** Lightweight web framework providing routing, middleware, and context handling.
