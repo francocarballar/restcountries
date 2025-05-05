@@ -1,5 +1,28 @@
 A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, providing information about world countries based on the REST Countries project data (v3.1).
 
+```mermaid
+graph LR
+    UserApp[Your Application / User] -- Request Data --> API;
+    API -- Fetches & Processes --> DataSource[Country Data v3.1];
+    DataSource -- Returns Data --> API;
+    API -- Sends JSON Response --> UserApp;
+```
+
+## What can you do with this API?
+
+This API allows you to easily integrate comprehensive and up-to-date country information into your applications and workflows. Whether you are building a website, an internal tool, or an analytical model, having access to reliable country data is essential.
+
+## Use Cases
+
+Here are some examples of how you can leverage this API:
+
+- **E-commerce & Forms:** Populate country selection dropdowns for shipping or billing addresses. Display country-specific details like common names.
+- **Analytics & Dashboards:** Enrich your data by adding country context. Segment users or visualize information geographically.
+- **Travel & Information Sites:** Show detailed information about countries, including capitals, regions, and population figures.
+- **Educational Tools:** Provide factual data about world countries for learning platforms, quizzes, or research.
+- **User Registration:** Standardize country data input during user signup processes.
+- **Data Enrichment:** Augment internal datasets with official country names, regions, or other details.
+
 ## Features
 
 - Fetch all countries or filter by name/region.
@@ -10,63 +33,6 @@ A RESTful API built with Hono and TypeScript, deployed on Cloudflare Workers, pr
 - Input validation using Zod.
 - Efficient data retrieval using preprocessed maps.
 - Edge caching via Cloudflare Workers Cache API for improved performance.
-
-## Installation & Configuration
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/francocarballar/restcountries
-   cd restcountries
-   ```
-
-2. **Install dependencies:**
-   _(Assuming Bun is used, based on `bun.lock`; adjust if using npm or yarn)_
-
-   <CodeGroup>
-   ```bash bun
-   bun install
-   ```
-   ```bash pnpm
-   pnpm install
-   ```
-   ```bash npm
-   npm install
-   ```
-   ```bash yarn
-   yarn install
-   ```
-   </CodeGroup>
-
-3. **Configuration:**
-   - This project relies on configuration defined in `wrangler.jsonc` (or `wrangler.toml`).
-   - No specific environment variables seem required based on the current code, but review `wrangler.jsonc` for any potential secrets or variables needed for Cloudflare deployment (e.g., `account_id`).
-
-## Local Development
-
-To run the development server locally:
-
-<CodeGroup>
-
-```bash bun
-bun run dev
-```
-
-```bash pnpm
-pnpm run dev
-```
-
-```bash npm
-npm run dev
-```
-
-```bash yarn
-yarn run dev
-```
-
-</CodeGroup>
-
-The API will typically be available at `http://localhost:8787` (or the port configured in `wrangler.jsonc`/`package.json`).
 
 ## Quick Links
 

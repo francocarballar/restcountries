@@ -1,5 +1,28 @@
 Una API RESTful construida con Hono y TypeScript, desplegada en Cloudflare Workers, que proporciona información sobre países del mundo basada en los datos del proyecto REST Countries (v3.1).
 
+```mermaid
+graph LR
+    UserApp[Tu Aplicación / Usuario] -- Solicita Datos --> API;
+    API -- Obtiene y Procesa --> DataSource[Datos Países v3.1];
+    DataSource -- Devuelve Datos --> API;
+    API -- Envía Respuesta JSON --> UserApp;
+```
+
+## ¿Qué puedes hacer con esta API?
+
+Esta API te permite integrar fácilmente información completa y actualizada sobre países en tus aplicaciones y flujos de trabajo. Ya sea que estés construyendo un sitio web, una herramienta interna o un modelo analítico, tener acceso a datos fiables de países es esencial.
+
+## Casos de Uso
+
+A continuación, algunos ejemplos de cómo puedes aprovechar esta API:
+
+- **E-commerce y Formularios:** Rellena menús desplegables de selección de países para direcciones de envío o facturación. Muestra detalles específicos del país, como nombres comunes.
+- **Análisis y Dashboards:** Enriquece tus datos añadiendo contexto de país. Segmenta usuarios o visualiza información geográficamente.
+- **Sitios de Viajes e Información:** Muestra información detallada sobre países, incluyendo capitales, regiones y cifras de población.
+- **Herramientas Educativas:** Proporciona datos fácticos sobre países del mundo para plataformas de aprendizaje, cuestionarios o investigación.
+- **Registro de Usuarios:** Estandariza la entrada de datos de país durante los procesos de registro de usuarios.
+- **Enriquecimiento de Datos:** Amplía conjuntos de datos internos con nombres oficiales de países, regiones u otros detalles.
+
 ## Características
 
 - Obtener todos los países o filtrar por nombre/región.
@@ -10,63 +33,6 @@ Una API RESTful construida con Hono y TypeScript, desplegada en Cloudflare Worke
 - Validación de entrada usando Zod.
 - Recuperación eficiente de datos usando mapas preprocesados.
 - Almacenamiento en caché en el borde (edge caching) mediante la API de Caché de Cloudflare Workers para mejorar el rendimiento.
-
-## Instalación y Configuración
-
-1. **Clonar el repositorio:**
-
-   ```bash
-   git clone https://github.com/francocarballar/restcountries
-   cd restcountries
-   ```
-
-2. **Instalar dependencias:**
-   _(Asumiendo que se usa Bun, basado en `bun.lock`; ajusta si usas npm o yarn)_
-
-   <CodeGroup>
-   ```bash bun
-   bun install
-   ```
-   ```bash pnpm
-   pnpm install
-   ```
-   ```bash npm
-   npm install
-   ```
-   ```bash yarn
-   yarn install
-   ```
-   </CodeGroup>
-
-3. **Configuración:**
-   - Este proyecto depende de la configuración definida en `wrangler.jsonc` (o `wrangler.toml`).
-   - No parecen requerirse variables de entorno específicas según el código actual, pero revisa `wrangler.jsonc` en busca de posibles secretos o variables necesarias para el despliegue en Cloudflare (p. ej., `account_id`).
-
-## Desarrollo Local
-
-Para ejecutar el servidor de desarrollo localmente:
-
-<CodeGroup>
-
-```bash bun
-bun run dev
-```
-
-```bash pnpm
-pnpm run dev
-```
-
-```bash npm
-npm run dev
-```
-
-```bash yarn
-yarn run dev
-```
-
-</CodeGroup>
-
-La API estará típicamente disponible en `http://localhost:8787` (o el puerto configurado en `wrangler.jsonc`/`package.json`).
 
 ## Enlaces Rápidos
 
