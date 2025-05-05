@@ -54,30 +54,31 @@ A typical request flows through the following layers:
 
 ```mermaid
 flowchart TD
+    subgraph subGraph0["Error Handling"]
+        direction LR
+        X{"Global onError Handler"}
+        Y{"400 Bad Request"}
+        T["Any Step Error"]
+        W["Translated Error Response"]
+    end
+
     A[Request] --> B{Hono Entry Point};
     B --> C{Cache Middleware};
     C -- Cache Miss --> D{Routing};
     C -- Cache Hit --> Z[Cached Response];
-    D --> E{Validation Middleware (Zod)};
-    E -- Invalid --> Y{400 Bad Request};
+    D --> E{Validation Middleware - Zod};
+    E -- Invalid --> Y;
     E -- Valid --> F[Route Handler];
     F --> G[Service Logic];
-    G --> H(Data Preprocessing / Maps);
-    G --> I(Shared Utils: Sort, Filter, Normalize);
-    G --> J(Shared Utils: i18n);
+    G --> H[Data Preprocessing / Maps] & I[Shared Utils: Sort, Filter, Normalize] & J[Shared Utils: i18n];
     H --> K{Processed Data};
     I --> K;
     J --> K;
     K --> L[Response Generation];
-    L --> C; # Response goes back towards cache middleware to be stored
-    L --> M[JSON Response];
-
-    subgraph Error Handling
-      Y --> X{Global onError Handler};
-      T[Any Step Error] --> X;
-      X --> W[Translated Error Response];
-    end
-
+    L --> C & M[JSON Response];
+    Y --> X;
+    T --> X;
+    X --> W;
     M --> Client;
     Z --> Client;
     W --> Client;

@@ -54,33 +54,34 @@ Una petición típica fluye a través de las siguientes capas:
 
 ```mermaid
 flowchart TD
+    subgraph subGraph0["Error Handling / Manejo Errores"]
+        direction LR
+        X{"Global onError Handler"}
+        Y{"400 Bad Request"}
+        T["Any Step Error / Error en Paso"]
+        W["Translated Error Response / Respuesta Error Traducida"]
+    end
+
     A[Request / Petición] --> B{Hono Entry Point};
     B --> C{Cache Middleware};
     C -- Cache Miss --> D{Routing / Enrutamiento};
     C -- Cache Hit --> Z[Cached Response / Respuesta Caché];
-    D --> E{Validation Middleware (Zod)};
-    E -- Invalid --> Y{400 Bad Request};
+    D --> E{Validation Middleware - Zod};
+    E -- Invalid --> Y;
     E -- Valid --> F[Route Handler / Manejador Ruta];
     F --> G[Service Logic / Lógica Servicio];
-    G --> H(Data Preprocessing / Maps);
-    G --> I(Shared Utils: Sort, Filter, Normalize);
-    G --> J(Shared Utils: i18n);
+    G --> H[Data Preprocessing / Maps] & I[Shared Utils: Sort, Filter, Normalize] & J[Shared Utils: i18n];
     H --> K{Processed Data / Datos Procesados};
     I --> K;
     J --> K;
     K --> L[Response Generation / Generación Respuesta];
-    L --> C; # La respuesta vuelve al middleware de caché para almacenarse
-    L --> M[JSON Response / Respuesta JSON];
-
-    subgraph Error Handling / Manejo Errores
-      Y --> X{Global onError Handler};
-      T[Any Step Error / Error en Paso] --> X;
-      X --> W[Translated Error Response / Respuesta Error Traducida];
-    end
-
-    M --> Client / Cliente;
-    Z --> Client / Cliente;
-    W --> Client / Cliente;
+    L --> C & M[JSON Response / Respuesta JSON];
+    Y --> X;
+    T --> X;
+    X --> W;
+    M --> Client[Cliente];
+    Z --> Client;
+    W --> Client;
 ```
 
 ## Componentes Clave
