@@ -24,46 +24,47 @@
         "language": "en",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Overview",
             "pages": [
               "docs/en/introduction"
             ]
           },
           {
-            "group": "API Reference",
+            "group": "Developer Guide",
             "pages": [
+              "docs/en/getting-started",
+              "docs/en/architecture",
+              "docs/en/endpoints",
               {
-                "group": "General",
+                "group": "API Reference",
                 "pages": [
-                  "docs/en/api-reference/general/get-api-welcome-message"
-                ]
-              },
-              {
-                "group": "Countries",
-                "pages": [
-                  "docs/en/api-reference/countries/get-all-countries",
-                  "docs/en/api-reference/countries/get-countries-by-name"
-                ]
-              },
-              {
-                "group": "Regions",
-                "pages": [
-                  "docs/en/api-reference/regions/get-available-regions",
-                  "docs/en/api-reference/regions/get-countries-by-region"
+                  {
+                    "group": "General",
+                    "pages": [
+                      "docs/en/api-reference/general/get-api-welcome-message"
+                    ]
+                  },
+                  {
+                    "group": "Countries",
+                    "pages": [
+                      "docs/en/api-reference/countries/get-all-countries",
+                      "docs/en/api-reference/countries/get-countries-by-name"
+                    ]
+                  },
+                  {
+                    "group": "Regions",
+                    "pages": [
+                      "docs/en/api-reference/regions/get-available-regions",
+                      "docs/en/api-reference/regions/get-countries-by-region"
+                    ]
+                  }
                 ]
               }
             ]
           },
           {
-            "group": "Endpoints Guide",
+            "group": "Deployment",
             "pages": [
-              "docs/en/endpoints"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "docs/en/architecture",
               "docs/en/deploy"
             ]
           }
@@ -73,46 +74,47 @@
         "language": "es",
         "groups": [
           {
-            "group": "Empezar",
+            "group": "Resumen",
             "pages": [
               "docs/es/introduction"
             ]
           },
           {
-            "group": "Referencia API",
+            "group": "Guía para Desarrolladores",
             "pages": [
+              "docs/es/getting-started",
+              "docs/es/arquitectura",
+              "docs/es/endpoints",
               {
-                "group": "General",
+                "group": "Referencia API",
                 "pages": [
-                  "docs/es/api-reference/general/get-api-welcome-message"
-                ]
-              },
-              {
-                "group": "Países",
-                "pages": [
-                  "docs/es/api-reference/countries/get-all-countries",
-                  "docs/es/api-reference/countries/get-countries-by-name"
-                ]
-              },
-              {
-                "group": "Regiones",
-                "pages": [
-                  "docs/es/api-reference/regions/get-available-regions",
-                  "docs/es/api-reference/regions/get-countries-by-region"
+                  {
+                    "group": "General",
+                    "pages": [
+                      "docs/es/api-reference/general/get-api-welcome-message"
+                    ]
+                  },
+                  {
+                    "group": "Países",
+                    "pages": [
+                      "docs/es/api-reference/countries/get-all-countries",
+                      "docs/es/api-reference/countries/get-countries-by-name"
+                    ]
+                  },
+                  {
+                    "group": "Regiones",
+                    "pages": [
+                      "docs/es/api-reference/regions/get-available-regions",
+                      "docs/es/api-reference/regions/get-countries-by-region"
+                    ]
+                  }
                 ]
               }
             ]
           },
           {
-            "group": "Guía Endpoints",
+            "group": "Despliegue",
             "pages": [
-              "docs/es/endpoints"
-            ]
-          },
-          {
-            "group": "Guías",
-            "pages": [
-              "docs/es/architecture",
               "docs/es/deploy"
             ]
           }
