@@ -82,7 +82,7 @@
           {
             "group": "Guía para Desarrolladores",
             "pages": [
-              "docs/es/getting-started",
+              "docs/es/empezar",
               "docs/es/arquitectura",
               "docs/es/endpoints",
               {
